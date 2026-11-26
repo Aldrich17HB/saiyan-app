@@ -1526,7 +1526,7 @@ button {
 </style>
 
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 </head>
 <body>
 <header class="topbar">
@@ -2657,7 +2657,7 @@ button {
   }
   function transformationSilhouette(index) {
     const img = document.createElement("img");
-    img.src = `assets/goku-${index}.` + (index < 6 ? "webp" : "png");
+    img.src = `assets/goku-${index}.webp`;
     img.alt = "";
     img.className = "transform-figure transform-figure-" + index;
     img.setAttribute("aria-hidden", "true");
@@ -2688,9 +2688,10 @@ button {
         ),
         h("section", { class: "transformation-gallery" },
           h("p", { class: "eyebrow" }, "Evolución Saiyan"),
-          h("div", { class: "transformation-grid" }, ...TRANSFORMATIONS.map((x, i) => {
-            const displayNames = ["Goku Base", "Goku Super Saiyajin 1", "Goku Super Saiyajin 2", "Goku Super Saiyajin 3", "Goku Super Saiyajin Dios", "Goku Super Saiyajin Blue", "Goku Señal del Ultra Instinto", "Goku Ultra Instinto"];
-            const displayHints = ["Estado base", "Poder Saiyajin", "Energía eléctrica", "Poder máximo dorado", "Ki divino", "Ki divino azul", "Ultra Instinto incompleto", "Ultra Instinto dominado"];
+          h("div", { class: "transformation-grid" }, ...Array.from({ length: 10 }, (_, i) => {
+            const x = TRANSFORMATIONS[Math.min(i, TRANSFORMATIONS.length - 1)];
+            const displayNames = ["Goku Base", "Goku Super Saiyajin 1", "Goku Super Saiyajin 2", "Goku Super Saiyajin 3", "Goku Super Saiyajin 4", "Goku Dios", "Goku Blue", "Goku Blue Kaioken", "Goku Señal del Ultra Instinto", "Goku Ultra Instinto"];
+            const displayHints = ["Estado base", "Poder Saiyajin", "Energía eléctrica", "Poder máximo dorado", "Super Saiyajin 4", "Ki divino", "Ki divino azul", "Blue con Kaioken", "Ultra Instinto incompleto", "Ultra Instinto dominado"];
             const current = d.strength.transformation && d.strength.transformation.name === x.name;
             return h("article", { class: "transformation-card" + (current ? " is-current" : "") }, transformationSilhouette(i), h("div", { class: "transformation-card-text" }, h("strong", null, displayNames[i]), h("small", null, displayHints[i]), current ? h("span", { class: "current-transform-tag" }, "ACTUAL") : null));
           }))
@@ -3150,18 +3151,18 @@ button {
             const ctx = this.audioContext;
             if (!ctx || ctx.state !== "running") return;
             const now = ctx.currentTime;
-            [0, 0.48, 0.96, 1.44].forEach((offset, index) => {
+            [0, 0.28, 0.56].forEach((offset, index) => {
               const oscillator = ctx.createOscillator();
               const gain = ctx.createGain();
               oscillator.type = "sine";
-              oscillator.frequency.value = index % 2 === 1 ? 760 : 960;
+              oscillator.frequency.value = index === 1 ? 660 : 880;
               gain.gain.setValueAtTime(0.0001, now + offset);
-              gain.gain.exponentialRampToValueAtTime(0.34, now + offset + 0.035);
-              gain.gain.exponentialRampToValueAtTime(0.0001, now + offset + 0.36);
+              gain.gain.exponentialRampToValueAtTime(0.22, now + offset + 0.025);
+              gain.gain.exponentialRampToValueAtTime(0.0001, now + offset + 0.20);
               oscillator.connect(gain);
               gain.connect(ctx.destination);
               oscillator.start(now + offset);
-              oscillator.stop(now + offset + 0.38);
+              oscillator.stop(now + offset + 0.22);
             });
           } catch (_) {}
         }
