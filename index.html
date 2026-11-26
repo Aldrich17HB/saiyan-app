@@ -6,12 +6,6 @@
 <title>SAIYAN</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="theme-color" content="#06080a">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="SAIYAN">
-
 <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzA2MDgwYSIvPjxwYXRoIGQ9Ik0yNTYgNDBsNDAgMTEwIDEwMC03MC0zMCAxMjAgMTIwLTIwLTExMCAxMTAtNTAgMTQwLTYwLTEyMC02MCAxMjAtNTAtMTQwTDIyIDI0MGwxMjAgMjAtMzAtMTIwIDEwMCA3MHoiIGZpbGw9IiMzZGZmOGIiLz48L3N2Zz4K">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,800&family=Barlow:wght@500;600&family=JetBrains+Mono:wght@500&display=swap">
 <style>
@@ -1531,6 +1525,8 @@ button {
 .current-transform-tag { display: inline-block; padding: 3px 8px; border: 1px solid var(--volt); border-radius: 20px; background: rgba(155,255,0,.09); text-shadow: 0 0 8px var(--volt-glow); }
 </style>
 
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
 </head>
 <body>
 <header class="topbar">
@@ -3154,18 +3150,18 @@ button {
             const ctx = this.audioContext;
             if (!ctx || ctx.state !== "running") return;
             const now = ctx.currentTime;
-            [0, 0.28, 0.56].forEach((offset, index) => {
+            [0, 0.48, 0.96, 1.44].forEach((offset, index) => {
               const oscillator = ctx.createOscillator();
               const gain = ctx.createGain();
               oscillator.type = "sine";
-              oscillator.frequency.value = index === 1 ? 660 : 880;
+              oscillator.frequency.value = index % 2 === 1 ? 760 : 960;
               gain.gain.setValueAtTime(0.0001, now + offset);
-              gain.gain.exponentialRampToValueAtTime(0.22, now + offset + 0.025);
-              gain.gain.exponentialRampToValueAtTime(0.0001, now + offset + 0.20);
+              gain.gain.exponentialRampToValueAtTime(0.34, now + offset + 0.035);
+              gain.gain.exponentialRampToValueAtTime(0.0001, now + offset + 0.36);
               oscillator.connect(gain);
               gain.connect(ctx.destination);
               oscillator.start(now + offset);
-              oscillator.stop(now + offset + 0.22);
+              oscillator.stop(now + offset + 0.38);
             });
           } catch (_) {}
         }
