@@ -1,13 +1,33 @@
 {
+  "id": "./",
   "name": "SAIYAN",
   "short_name": "SAIYAN",
-  "description": "Entrenamiento y evolución Saiyan",
+  "description": "Registro de entrenamiento con estilo Dragon Ball. Tus datos se guardan solo en tu teléfono.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
+  "orientation": "portrait",
+  "lang": "es",
   "background_color": "#06080a",
   "theme_color": "#06080a",
   "icons": [
-    {"src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png"}
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }
